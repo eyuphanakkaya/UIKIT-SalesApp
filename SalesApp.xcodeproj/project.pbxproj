@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		A4215F462A9399E700DD655B /* ProductCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4215F452A9399E700DD655B /* ProductCVCell.swift */; };
+		A455413B2A95F34F002928A8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A455413A2A95F34F002928A8 /* DetailViewController.swift */; };
+		A455413D2A96075A002928A8 /* DetailExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A455413C2A96075A002928A8 /* DetailExtension.swift */; };
+		A455413F2A962DF1002928A8 /* CateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A455413E2A962DF1002928A8 /* CateViewController.swift */; };
+		A45541432A9630AE002928A8 /* CategoriesCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45541422A9630AE002928A8 /* CategoriesCVCell.swift */; };
+		A45541452A9631EA002928A8 /* CateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45541442A9631EA002928A8 /* CateExtension.swift */; };
 		A47522882A93527400396C8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47522872A93527400396C8B /* AppDelegate.swift */; };
 		A475228A2A93527400396C8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47522892A93527400396C8B /* SceneDelegate.swift */; };
 		A475228F2A93527400396C8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A475228D2A93527400396C8B /* Main.storyboard */; };
@@ -24,6 +29,11 @@
 
 /* Begin PBXFileReference section */
 		A4215F452A9399E700DD655B /* ProductCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCVCell.swift; sourceTree = "<group>"; };
+		A455413A2A95F34F002928A8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		A455413C2A96075A002928A8 /* DetailExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailExtension.swift; sourceTree = "<group>"; };
+		A455413E2A962DF1002928A8 /* CateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CateViewController.swift; sourceTree = "<group>"; };
+		A45541422A9630AE002928A8 /* CategoriesCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCVCell.swift; sourceTree = "<group>"; };
+		A45541442A9631EA002928A8 /* CateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CateExtension.swift; sourceTree = "<group>"; };
 		A47522842A93527400396C8B /* SalesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SalesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A47522872A93527400396C8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A47522892A93527400396C8B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +125,7 @@
 				A4215F452A9399E700DD655B /* ProductCVCell.swift */,
 				A47522A72A93610D00396C8B /* HomeCollectionViewCell.swift */,
 				A4C180EB2A94E7BF000C6602 /* CategoryCVCell.swift */,
+				A45541422A9630AE002928A8 /* CategoriesCVCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -131,6 +142,8 @@
 			isa = PBXGroup;
 			children = (
 				A47522A12A93600900396C8B /* HomeViewController.swift */,
+				A455413A2A95F34F002928A8 /* DetailViewController.swift */,
+				A455413E2A962DF1002928A8 /* CateViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -139,6 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				A4C180E22A94A430000C6602 /* HomeExtension.swift */,
+				A455413C2A96075A002928A8 /* DetailExtension.swift */,
+				A45541442A9631EA002928A8 /* CateExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -223,10 +238,15 @@
 				A4C180EC2A94E7BF000C6602 /* CategoryCVCell.swift in Sources */,
 				A4C180E52A94B5AB000C6602 /* SalesViewModel.swift in Sources */,
 				A47522A82A93610D00396C8B /* HomeCollectionViewCell.swift in Sources */,
+				A455413D2A96075A002928A8 /* DetailExtension.swift in Sources */,
 				A4C180E32A94A430000C6602 /* HomeExtension.swift in Sources */,
 				A4215F462A9399E700DD655B /* ProductCVCell.swift in Sources */,
+				A45541432A9630AE002928A8 /* CategoriesCVCell.swift in Sources */,
 				A4C180E72A94B764000C6602 /* SalesModel.swift in Sources */,
+				A45541452A9631EA002928A8 /* CateExtension.swift in Sources */,
+				A455413F2A962DF1002928A8 /* CateViewController.swift in Sources */,
 				A47522882A93527400396C8B /* AppDelegate.swift in Sources */,
+				A455413B2A95F34F002928A8 /* DetailViewController.swift in Sources */,
 				A475228A2A93527400396C8B /* SceneDelegate.swift in Sources */,
 				A47522A22A93600900396C8B /* HomeViewController.swift in Sources */,
 			);

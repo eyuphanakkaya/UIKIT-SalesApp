@@ -53,5 +53,28 @@ class SalesViewModel {
             }
         }.resume()
     }
+    //https://dummyjson.com/products/category/smartphones
+    func fetchCate(find: String,completion: @escaping([Product])->Void) {
+        guard let url = URL(string: "\(callApi.api)products/category/\(find)") else{
+            print("Hata")
+            return
+        }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else {
+                print(error)
+                return
+            }
+            do {
+                let result = try JSONDecoder().decode(ProductResult.self, from: data!)
+                if let results = result.products {
+                    completion(results)
+                    print(results)
+                }
+            } catch {
+                print(error)
+            }
+            
+        }.resume()
+    }
 
 }

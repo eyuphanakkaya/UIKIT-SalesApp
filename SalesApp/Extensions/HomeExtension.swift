@@ -24,9 +24,9 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
         if collectionView == self.homeCollectionView {
             return 1
         } else if collectionView == self.productCollectionView {
-            return productList.count
+            return productList.prefix(10).count
         } else {
-            return cateList.count
+            return cateList.prefix(4).count
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -50,52 +50,26 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
             let cate = cateList[indexPath.row]
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "cateCell", for: indexPath) as? CategoryCVCell
             cell?.categoryNameLabel.text = cate.uppercased()
-            switch cate {
-            case "smartphones":
-                cell?.imageView.image = UIImage(named: "resim2")
-            case "laptops":
-                cell?.imageView.image = UIImage(named: "resim1")
-            case "laptops":
-                cell?.imageView.image = UIImage(named: "resim1")
-            case "laptops":
-                cell?.imageView.image = UIImage(named: "resim1")
-            case "laptops":
-                cell?.imageView.image = UIImage(named: "resim1")
-            case "laptops":
-                cell?.imageView.image = UIImage(named: "resim1")
-            case "laptops":
-                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-//            case "laptops":
-//                cell?.imageView.image = UIImage(named: "resim1")
-            default:
-                print("")
-            }
-            
+                        switch cate {
+                        case "smartphones":
+                            cell?.imageView.image = UIImage(named: "phone")
+                        case "laptops":
+                            cell?.imageView.image = UIImage(named: "laptop")
+                        case "fragrances":
+                            cell?.imageView.image = UIImage(named: "fragrances")
+                        case "skincare":
+                            cell?.imageView.image = UIImage(named: "skincare")
+                        default:
+                            print("")
+                        }
             return cell!
         }
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == productCollectionView {
+            performSegue(withIdentifier: "toDetailVC", sender: indexPath.row)
+
+        }
+    }
 }
+

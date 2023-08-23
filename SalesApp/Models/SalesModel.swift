@@ -23,8 +23,5 @@ struct Product: Codable {
     let thumbnail: String?
     let images: [String]?
 }
-struct CateImage {
-    let id: Int?
-    let image: String?
-}
+
 
