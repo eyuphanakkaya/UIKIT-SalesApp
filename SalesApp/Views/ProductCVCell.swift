@@ -7,9 +7,16 @@
 
 import UIKit
 
+
+
 class ProductCVCell: UICollectionViewCell {
+    var viewModel: SalesViewModel?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var productName: UILabel!
     @IBOutlet weak var productPrice: UILabel!
-    @IBOutlet weak var addProduct: UIButton!
+
+    
+    @IBAction func addCartClicked(_ sender: Any) {
+        viewModel?.myProtocol?.add(indexPath: (viewModel?.indexPath!)!)
+    }
 }

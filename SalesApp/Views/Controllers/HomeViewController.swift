@@ -10,8 +10,11 @@ import UIKit
 class HomeViewController: UIViewController {
     var productList = [Product]()
     var cateList = [String]()
+    var cateViewController = CateViewController()
     var viewModel = SalesViewModel()
+    var myCartList = [MyCart]()
     
+    @IBOutlet weak var myPopUpButton: UIButton!
     @IBOutlet weak var cateCollectionView: UICollectionView!
     @IBOutlet weak var homeCollectionView: UICollectionView!
     @IBOutlet weak var productCollectionView: UICollectionView!
@@ -36,18 +39,30 @@ class HomeViewController: UIViewController {
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let index = sender as? Int
-        let toDestination = segue.destination as!  DetailViewController
-        toDestination.product = productList[index!]
+        if segue.identifier == "toDetailVC" {
+            let index = sender as? Int
+            let toDestination = segue.destination as!  DetailViewController
+            toDestination.product = productList[index!]
+        } else if segue.identifier == "toCateVC" {
+            let index = sender as? Int
+            let toDestination = segue.destination as! CateViewController
+            toDestination.cateFind = cateList[index!]
+        }
+        
+        
     }
     override func viewWillAppear(_ animated: Bool) {
+        allProducts()
+        setPopUpButton()
+    }
+    func allProducts() {
         viewModel.getAllProduct {  products in
-                self.productList.append(contentsOf: products)
+            self.productList.append(contentsOf: products)
+            
             DispatchQueue.main.async {
                 self.productCollectionView.reloadData()
             }
         }
-
     }
     func productDesign() {
         let design = UICollectionViewFlowLayout()
@@ -69,12 +84,53 @@ class HomeViewController: UIViewController {
         cateCollectionView.collectionViewLayout = design
     }
     
-    @IBAction func myCartClicked(_ sender: Any) {
-        
+//    @IBAction func myCartClicked(_ sender: Any) {
+//        for x in productList {
+//            let product = MyCart(image: x.thumbnail, title: x.title, price: x.price)
+//            if !myCartList.contains(where: {$0.image == product.image}) {
+//                myCartList.append(product)
+//            }
+//        }
+//    }
+    func setPopUpButton() {
+        let optionalClosure = {(action: UIAction) in
+            print(action.title)
+        }
+        myPopUpButton.menu = UIMenu(children: [
+            UIAction(title: "A to Z", handler: { action in
+                print("Hepsini getir")
+                self.viewModel.getAllProduct {  products in
+                    self.productList.append(contentsOf: products)
+                    self.productList.sort{$0.title ?? "" < $1.title ?? ""}
+                    DispatchQueue.main.async {
+                        self.productCollectionView.reloadData()
+                    }
+                }
+            }),
+            UIAction(title: "Decreasing by price", handler: { action in
+                print("fiyata göre azalan")
+                self.viewModel.getAllProduct {  products in
+                    self.productList.append(contentsOf: products)
+                    self.productList.sort{$0.price ?? 0 > $1.price ?? 0}
+                    DispatchQueue.main.async {
+                        self.productCollectionView.reloadData()
+                    }
+                }
+                
+            }),
+            UIAction(title: "Increasing by price", handler: { action in
+                print("fiyata göre artan")
+                self.viewModel.getAllProduct {  products in
+                    self.productList.append(contentsOf: products)
+                    self.productList.sort{$0.price ?? 0 < $1.price ?? 0}
+                    DispatchQueue.main.async {
+                        self.productCollectionView.reloadData()
+                    }
+                }
+            })
+        ])
     }
-    @IBAction func allCateClicked(_ sender: Any) {
-        
-    }
+    
 }
 
 

@@ -9,7 +9,16 @@ import Foundation
 import UIKit
 import Kingfisher
 
-extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSource,ProductProtocol {
+    func add(indexPath: IndexPath) {
+        let indexPath = productList[indexPath.row]
+        let products = MyCart(image: indexPath.thumbnail, title: indexPath.title, price: indexPath.price)
+        viewModel.cartList.append(products)
+        print("Sepete Ekle: \(viewModel.cartList)")
+    }
+    
+
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if collectionView == self.homeCollectionView {
             return 2
@@ -44,7 +53,9 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
                 cell?.productName.text =  title
                 cell?.productPrice.text = "$\(price)"
             }
-            
+            cell?.viewModel = viewModel
+            cell?.viewModel?.indexPath = indexPath
+            cell?.viewModel?.myProtocol = self
             return cell!
         } else {
             let cate = cateList[indexPath.row]
@@ -69,6 +80,8 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
         if collectionView == productCollectionView {
             performSegue(withIdentifier: "toDetailVC", sender: indexPath.row)
 
+        } else if collectionView == cateCollectionView {
+            performSegue(withIdentifier: "toCateVC", sender: indexPath.row)
         }
     }
 }

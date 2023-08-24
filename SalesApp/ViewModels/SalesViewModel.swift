@@ -8,11 +8,16 @@
 import Foundation
 import UIKit
 
+protocol ProductProtocol {
+    func add(indexPath: IndexPath)
+}
 class callApi {
     static let api = "https://dummyjson.com/"
 }
 class SalesViewModel {
-    
+    var myProtocol: ProductProtocol?
+    var indexPath: IndexPath?
+    var cartList = [MyCart]()
     
     func getAllProduct(completion: @escaping([Product])->Void) {
         guard let url = URL(string: "\(callApi.api)products") else {
@@ -28,6 +33,7 @@ class SalesViewModel {
                 let result =  try JSONDecoder().decode(ProductResult.self, from: data!)
                 if let results = result.products {
                     completion(results)
+                   
                 }
             } catch {
                 print(error)
@@ -47,15 +53,15 @@ class SalesViewModel {
             do {
                 let result = try JSONDecoder().decode([String].self, from: data!)
                 completion(result)
-                print(result)
             } catch {
                 print(error)
             }
         }.resume()
     }
     //https://dummyjson.com/products/category/smartphones
+    //\(callApi.api)products/category/\(find)
     func fetchCate(find: String,completion: @escaping([Product])->Void) {
-        guard let url = URL(string: "\(callApi.api)products/category/\(find)") else{
+        guard let url = URL(string: "https://dummyjson.com/products/category/\(find)") else{
             print("Hata")
             return
         }
@@ -67,9 +73,7 @@ class SalesViewModel {
             do {
                 let result = try JSONDecoder().decode(ProductResult.self, from: data!)
                 if let results = result.products {
-                    completion(results)
-                    print(results)
-                }
+                    completion(results)                }
             } catch {
                 print(error)
             }
