@@ -11,7 +11,7 @@ class CateViewController: UIViewController {
 
     @IBOutlet weak var productTitleLabel: UILabel!
     @IBOutlet weak var categoryCollectionView: UICollectionView!
-    var viewModel = SalesViewModel()
+    var viewModel: SalesViewModel?
     var cateFind: String?
     var productsList = [Product]()
     override func viewDidLoad() {
@@ -19,19 +19,20 @@ class CateViewController: UIViewController {
         categoryCollectionView.delegate = self
         categoryCollectionView.dataSource = self
         productDesign()
-        viewModel.fetchCate(find: cateFind ?? "") {  products in
-                self.productsList.append(contentsOf: products)
-            print(products)
-            DispatchQueue.main.async {
-                self.productTitleLabel.text = self.cateFind!.capitalized
-                self.categoryCollectionView.reloadData()
-            }
-        }
+        
+        cate()
+
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let index = sender as? Int
-        let toDestionation = segue.destination as! DetailViewController
-        toDestionation.product = productsList[index!]
+        if segue.identifier == "toDetail" {
+            let index = sender as? Int
+            let toDestionation = segue.destination as! DetailViewController
+            toDestionation.product = productsList[index!]
+        } else if segue.identifier == "toCart" {
+            let toDestionation = segue.destination as! CartViewController
+            toDestionation.viewModel = viewModel
+        }
+
     }
 
     func productDesign() {
@@ -43,12 +44,21 @@ class CateViewController: UIViewController {
         
         categoryCollectionView.collectionViewLayout = design
     }
+    func cate(){
+        viewModel?.fetchCate(find: cateFind ?? "") {  products in
+                self.productsList.append(contentsOf: products)
+            DispatchQueue.main.async {
+                self.productTitleLabel.text = self.cateFind!.capitalized
+                self.categoryCollectionView.reloadData()
+            }
+        }
+    }
     
     @IBAction func backClicked(_ sender: Any) {
         dismiss(animated: true)
     }
     
     @IBAction func cartClicked(_ sender: Any) {
-        
+        performSegue(withIdentifier: "toCart", sender: nil)
     }
 }

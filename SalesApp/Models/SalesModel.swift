@@ -23,10 +23,11 @@ struct Product: Codable {
     let thumbnail: String?
     let images: [String]?
 }
-struct MyCart {
-    let image: String?
-    let title: String?
-    let price: Int?
+struct MyCart: Identifiable {
+    let id = UUID()
+    let image: String
+    let title: String
+    let price: Int
 }
 
 

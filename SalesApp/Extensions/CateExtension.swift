@@ -12,9 +12,12 @@ import Kingfisher
 extension CateViewController: UICollectionViewDataSource,UICollectionViewDelegate,ProductProtocol {
     func add(indexPath: IndexPath) {
         let indexPath = productsList[indexPath.row]
-        let products = MyCart(image: indexPath.thumbnail, title: indexPath.title, price: indexPath.price)
-        viewModel.cartList.append(products)
-        print("Sepete Ekle: \(viewModel.cartList)")
+        if let viewModels = viewModel, let image = indexPath.thumbnail, let title = indexPath.title, let price = indexPath.price {
+            let products = MyCart(image: image, title: title, price: price)
+            viewModels.cartList.append(products)
+            print("Sepete Ekle: \(viewModels.cartList)")
+        }
+     
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

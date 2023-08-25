@@ -28,14 +28,13 @@ class HomeViewController: UIViewController {
         cateCollectionView.delegate = self
         cateCollectionView.dataSource = self
         
+        
         productDesign()
         cateDesign()
-        viewModel.getAllCate { cate in
-            self.cateList.append(contentsOf: cate)
-            DispatchQueue.main.async {
-                self.cateCollectionView.reloadData()
-            }
-        }
+        
+        fetchCate()
+        
+
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,6 +46,10 @@ class HomeViewController: UIViewController {
             let index = sender as? Int
             let toDestination = segue.destination as! CateViewController
             toDestination.cateFind = cateList[index!]
+            toDestination.viewModel = viewModel
+        } else if segue.identifier == "toCartVc" {
+            let toDestination = segue.destination as! CartViewController
+            toDestination.viewModel = viewModel
         }
         
         
@@ -61,6 +64,14 @@ class HomeViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.productCollectionView.reloadData()
+            }
+        }
+    }
+    func fetchCate() {
+        viewModel.getAllCate { cate in
+            self.cateList.append(contentsOf: cate)
+            DispatchQueue.main.async {
+                self.cateCollectionView.reloadData()
             }
         }
     }
@@ -83,19 +94,8 @@ class HomeViewController: UIViewController {
         
         cateCollectionView.collectionViewLayout = design
     }
-    
-//    @IBAction func myCartClicked(_ sender: Any) {
-//        for x in productList {
-//            let product = MyCart(image: x.thumbnail, title: x.title, price: x.price)
-//            if !myCartList.contains(where: {$0.image == product.image}) {
-//                myCartList.append(product)
-//            }
-//        }
-//    }
     func setPopUpButton() {
-        let optionalClosure = {(action: UIAction) in
-            print(action.title)
-        }
+
         myPopUpButton.menu = UIMenu(children: [
             UIAction(title: "A to Z", handler: { action in
                 print("Hepsini getir")
@@ -130,6 +130,11 @@ class HomeViewController: UIViewController {
             })
         ])
     }
+    
+    @IBAction func cartClicked(_ sender: Any) {
+        performSegue(withIdentifier: "toCartVc", sender: nil)
+    }
+    
     
 }
 

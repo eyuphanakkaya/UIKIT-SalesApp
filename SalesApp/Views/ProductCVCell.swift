@@ -17,6 +17,9 @@ class ProductCVCell: UICollectionViewCell {
 
     
     @IBAction func addCartClicked(_ sender: Any) {
-        viewModel?.myProtocol?.add(indexPath: (viewModel?.indexPath!)!)
+        if let viewModels = viewModel, let index = viewModels.indexPath {
+            viewModels.myProtocol?.add(indexPath: index)
+
+        }
     }
 }

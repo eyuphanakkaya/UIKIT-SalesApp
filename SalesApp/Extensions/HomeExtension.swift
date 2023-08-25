@@ -12,12 +12,15 @@ import Kingfisher
 extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSource,ProductProtocol {
     func add(indexPath: IndexPath) {
         let indexPath = productList[indexPath.row]
-        let products = MyCart(image: indexPath.thumbnail, title: indexPath.title, price: indexPath.price)
-        viewModel.cartList.append(products)
-        print("Sepete Ekle: \(viewModel.cartList)")
+        if let image = indexPath.thumbnail , let title = indexPath.title , let price = indexPath.price {
+            let products = MyCart(image: image, title: title, price: price)
+            
+            viewModel.cartList.append(products)
+            print("Sepete Ekle: \(viewModel.cartList)")
+        }
     }
     
-
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if collectionView == self.homeCollectionView {
@@ -33,7 +36,8 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
         if collectionView == self.homeCollectionView {
             return 1
         } else if collectionView == self.productCollectionView {
-            return productList.prefix(10).count
+            return productList.count
+       //     return productList.prefix(10).count
         } else {
             return cateList.prefix(4).count
         }
@@ -61,25 +65,25 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
             let cate = cateList[indexPath.row]
             let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: "cateCell", for: indexPath) as? CategoryCVCell
             cell?.categoryNameLabel.text = cate.uppercased()
-                        switch cate {
-                        case "smartphones":
-                            cell?.imageView.image = UIImage(named: "phone")
-                        case "laptops":
-                            cell?.imageView.image = UIImage(named: "laptop")
-                        case "fragrances":
-                            cell?.imageView.image = UIImage(named: "fragrances")
-                        case "skincare":
-                            cell?.imageView.image = UIImage(named: "skincare")
-                        default:
-                            print("")
-                        }
+            switch cate {
+            case "smartphones":
+                cell?.imageView.image = UIImage(named: "phone")
+            case "laptops":
+                cell?.imageView.image = UIImage(named: "laptop")
+            case "fragrances":
+                cell?.imageView.image = UIImage(named: "fragrances")
+            case "skincare":
+                cell?.imageView.image = UIImage(named: "skincare")
+            default:
+                print("")
+            }
             return cell!
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == productCollectionView {
             performSegue(withIdentifier: "toDetailVC", sender: indexPath.row)
-
+            
         } else if collectionView == cateCollectionView {
             performSegue(withIdentifier: "toCateVC", sender: indexPath.row)
         }
