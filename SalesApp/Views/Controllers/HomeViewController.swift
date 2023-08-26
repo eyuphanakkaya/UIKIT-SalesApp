@@ -21,6 +21,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self
         productCollectionView.dataSource = self
@@ -34,7 +36,7 @@ class HomeViewController: UIViewController {
         
         fetchCate()
         
-
+        
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -54,26 +56,29 @@ class HomeViewController: UIViewController {
         
         
     }
-    override func viewWillAppear(_ animated: Bool) {
-        allProducts()
+    override func viewWillAppear(_ animated: Bool)  {
+        Task {
+          try await viewModel.getAllProduct {  products in
+                self.productList.append(contentsOf: products)
+                
+                DispatchQueue.main.async {
+                    self.productCollectionView.reloadData()
+                }
+            }
+        }
         setPopUpButton()
     }
-    func allProducts() {
-        viewModel.getAllProduct {  products in
-            self.productList.append(contentsOf: products)
-            
-            DispatchQueue.main.async {
-                self.productCollectionView.reloadData()
-            }
-        }
-    }
+
     func fetchCate() {
-        viewModel.getAllCate { cate in
-            self.cateList.append(contentsOf: cate)
-            DispatchQueue.main.async {
-                self.cateCollectionView.reloadData()
+        Task {
+           try await viewModel.getAllCate { cate in
+                self.cateList.append(contentsOf: cate)
+                DispatchQueue.main.async {
+                    self.cateCollectionView.reloadData()
+                }
             }
         }
+
     }
     func productDesign() {
         let design = UICollectionViewFlowLayout()
@@ -95,37 +100,46 @@ class HomeViewController: UIViewController {
         cateCollectionView.collectionViewLayout = design
     }
     func setPopUpButton() {
-
+        
         myPopUpButton.menu = UIMenu(children: [
             UIAction(title: "A to Z", handler: { action in
                 print("Hepsini getir")
-                self.viewModel.getAllProduct {  products in
-                    self.productList.append(contentsOf: products)
-                    self.productList.sort{$0.title ?? "" < $1.title ?? ""}
-                    DispatchQueue.main.async {
-                        self.productCollectionView.reloadData()
-                    }
-                }
-            }),
-            UIAction(title: "Decreasing by price", handler: { action in
-                print("fiyata göre azalan")
-                self.viewModel.getAllProduct {  products in
-                    self.productList.append(contentsOf: products)
-                    self.productList.sort{$0.price ?? 0 > $1.price ?? 0}
-                    DispatchQueue.main.async {
-                        self.productCollectionView.reloadData()
+                Task {
+                    try await self.viewModel.getAllProduct {  products in
+                        self.productList.append(contentsOf: products)
+                        self.productList.sort{$0.title ?? "" < $1.title ?? ""}
+                        DispatchQueue.main.async {
+                            self.productCollectionView.reloadData()
+                        }
                     }
                 }
                 
             }),
+            UIAction(title: "Decreasing by price", handler: { action in
+                print("fiyata göre azalan")
+                Task {
+                    try await self.viewModel.getAllProduct {  products in
+                        self.productList.append(contentsOf: products)
+                        self.productList.sort{$0.price ?? 0 > $1.price ?? 0}
+                        DispatchQueue.main.async {
+                            self.productCollectionView.reloadData()
+                        }
+                    }
+                }
+                
+                
+            }),
             UIAction(title: "Increasing by price", handler: { action in
                 print("fiyata göre artan")
-                self.viewModel.getAllProduct {  products in
-                    self.productList.append(contentsOf: products)
-                    self.productList.sort{$0.price ?? 0 < $1.price ?? 0}
-                    DispatchQueue.main.async {
-                        self.productCollectionView.reloadData()
+                Task {
+                    try await self.viewModel.getAllProduct {  products in
+                        self.productList.append(contentsOf: products)
+                        self.productList.sort{$0.price ?? 0 < $1.price ?? 0}
+                        DispatchQueue.main.async {
+                            self.productCollectionView.reloadData()
+                        }
                     }
+                    
                 }
             })
         ])

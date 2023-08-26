@@ -8,7 +8,7 @@
 import UIKit
 
 class CartTableVCell: UITableViewCell {
-
+    
     @IBOutlet weak var imageViews: UIImageView!
     @IBOutlet weak var pieceProductLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
@@ -24,6 +24,7 @@ class CartTableVCell: UITableViewCell {
     }
 
     @IBAction func removeClicked(_ sender: Any) {
+        
     }
     @IBAction func increaseClicked(_ sender: Any) {
     }

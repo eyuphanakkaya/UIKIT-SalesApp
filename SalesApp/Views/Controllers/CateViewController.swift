@@ -45,13 +45,16 @@ class CateViewController: UIViewController {
         categoryCollectionView.collectionViewLayout = design
     }
     func cate(){
-        viewModel?.fetchCate(find: cateFind ?? "") {  products in
-                self.productsList.append(contentsOf: products)
-            DispatchQueue.main.async {
-                self.productTitleLabel.text = self.cateFind!.capitalized
-                self.categoryCollectionView.reloadData()
+        Task {
+           try await viewModel?.fetchCate(find: cateFind ?? "") {  products in
+                    self.productsList.append(contentsOf: products)
+                DispatchQueue.main.async {
+                    self.productTitleLabel.text = self.cateFind!.capitalized
+                    self.categoryCollectionView.reloadData()
+                }
             }
         }
+
     }
     
     @IBAction func backClicked(_ sender: Any) {

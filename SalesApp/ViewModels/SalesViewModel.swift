@@ -19,66 +19,39 @@ class SalesViewModel {
     var indexPath: IndexPath?
     var cartList = [MyCart]()
     
-    func getAllProduct(completion: @escaping([Product])->Void) {
+    func getAllProduct(completion: @escaping([Product])->Void) async throws {
         guard let url = URL(string: "\(callApi.api)products") else {
-            print("hataa")
+            print("HATAAA!!!")
             return
         }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else{
-                print(error)
-                return
-            }
-            do {
-                let result =  try JSONDecoder().decode(ProductResult.self, from: data!)
-                if let results = result.products {
-                    completion(results)
-                   
-                }
-            } catch {
-                print(error)
-            }
-        }.resume()
+        let data: (Data,URLResponse) = try await URLSession.shared.data(from: url)
+        let result = try JSONDecoder().decode(ProductResult.self, from: data.0)
+        if let results = result.products {
+            completion(results)
+        }
+        
     }
-    func getAllCate(completion: @escaping([String])->Void) {
+    func getAllCate(completion: @escaping([String])-> Void) async throws {
         guard let url = URL(string: "\(callApi.api)products/categories") else{
             print("Hata")
             return
         }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                print(error)
-                return
-            }
-            do {
-                let result = try JSONDecoder().decode([String].self, from: data!)
-                completion(result)
-            } catch {
-                print(error)
-            }
-        }.resume()
+        let data = try await URLSession.shared.data(from: url)
+        let result = try JSONDecoder().decode([String].self, from: data.0)
+        completion(result)
+        
     }
-    //https://dummyjson.com/products/category/smartphones
-    //\(callApi.api)products/category/\(find)
-    func fetchCate(find: String,completion: @escaping([Product])->Void) {
-        guard let url = URL(string: "https://dummyjson.com/products/category/\(find)") else{
+    func fetchCate(find: String,completion: @escaping([Product])->Void) async throws {
+        guard let url = URL(string: "\(callApi.api)products/category/\(find)") else{
             print("Hata")
             return
         }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                print(error)
-                return
-            }
-            do {
-                let result = try JSONDecoder().decode(ProductResult.self, from: data!)
-                if let results = result.products {
-                    completion(results)                }
-            } catch {
-                print(error)
-            }
-            
-        }.resume()
+      let data = try await URLSession.shared.data(from: url)
+        let result = try JSONDecoder().decode(ProductResult.self, from: data.0)
+        if let results = result.products {
+            completion(results)
+        }
     }
+
 
 }
