@@ -10,10 +10,13 @@ import Kingfisher
 
 class DetailViewController: UIViewController {
     
+    var favState = false
     var product: Product?
     var pageControl: UIPageControl!
     var imageViews: [UIImageView] = []
     var currentIndex: Int = 0
+    var viewModel: SalesViewModel?
+    @IBOutlet weak var favButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var brandLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
@@ -80,6 +83,27 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func favClicked(_ sender: Any) {
+        favState.toggle()
+  
+        if favState {
+            print("eklendi")
+            if let id = product?.id ,
+               let image = product?.thumbnail ,
+               let title = product?.title ,
+               let price = product?.price ,
+            let view = viewModel {
+                let fav = MyFav(id: id, image: image, title: title, price: price)
+                view.favList.append(fav)
+                print(view.favList)
+         //       favButton.setImage(UIImage(named: "heart.fill"), for: .normal)
+                if !view.favList.contains(where: {$0.id == product?.id }) {
+
+                }
+            }
+        } else {
+            print("çıkarıldı")
+            favButton.setImage(UIImage(named: "heart"), for: .normal)
+        }
     }
     
     @IBAction func backButtonClicked(_ sender: Any) {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class HomeViewController: UIViewController {
     var productList = [Product]()
@@ -13,7 +14,9 @@ class HomeViewController: UIViewController {
     var cateViewController = CateViewController()
     var viewModel = SalesViewModel()
     var myCartList = [MyCart]()
+    let locationManager = CLLocationManager()
     
+    @IBOutlet weak var myLocation: UILabel!
     @IBOutlet weak var myPopUpButton: UIButton!
     @IBOutlet weak var cateCollectionView: UICollectionView!
     @IBOutlet weak var homeCollectionView: UICollectionView!
@@ -21,7 +24,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
         
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self
@@ -30,6 +36,7 @@ class HomeViewController: UIViewController {
         cateCollectionView.delegate = self
         cateCollectionView.dataSource = self
         
+       
         
         productDesign()
         cateDesign()
@@ -44,6 +51,7 @@ class HomeViewController: UIViewController {
             let index = sender as? Int
             let toDestination = segue.destination as!  DetailViewController
             toDestination.product = productList[index!]
+            toDestination.viewModel = viewModel
         } else if segue.identifier == "toCateVC" {
             let index = sender as? Int
             let toDestination = segue.destination as! CateViewController
@@ -52,13 +60,16 @@ class HomeViewController: UIViewController {
         } else if segue.identifier == "toCartVc" {
             let toDestination = segue.destination as! CartViewController
             toDestination.viewModel = viewModel
+        } else if segue.identifier == "toFavVC" {
+            let toDestionation = segue.destination as! FavViewController
+            toDestionation.viewModel = viewModel
         }
         
         
     }
     override func viewWillAppear(_ animated: Bool)  {
         Task {
-          try await viewModel.getAllProduct {  products in
+            try await viewModel.getAllProduct {  products in
                 self.productList.append(contentsOf: products)
                 
                 DispatchQueue.main.async {
@@ -68,17 +79,17 @@ class HomeViewController: UIViewController {
         }
         setPopUpButton()
     }
-
+    
     func fetchCate() {
         Task {
-           try await viewModel.getAllCate { cate in
+            try await viewModel.getAllCate { cate in
                 self.cateList.append(contentsOf: cate)
                 DispatchQueue.main.async {
                     self.cateCollectionView.reloadData()
                 }
             }
         }
-
+        
     }
     func productDesign() {
         let design = UICollectionViewFlowLayout()
@@ -146,7 +157,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func cartClicked(_ sender: Any) {
-        performSegue(withIdentifier: "toCartVc", sender: nil)
+        performSegue(withIdentifier: "toFavVC", sender: nil)
     }
     
     

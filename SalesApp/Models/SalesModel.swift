@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct ProductResult: Codable {
     var products: [Product]?
@@ -23,11 +24,16 @@ struct Product: Codable {
     let thumbnail: String?
     let images: [String]?
 }
-struct MyCart: Identifiable {
-    let id = UUID()
-    let image: String
+struct MyCart {
+    let id: Int?
+    let image: String?
     let title: String
     let price: Int
 }
-
+struct MyFav {
+    let id: Int?
+    let image: String?
+    let title: String
+    let price: Int
+}
 

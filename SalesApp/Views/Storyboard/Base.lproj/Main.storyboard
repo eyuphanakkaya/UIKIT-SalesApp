@@ -233,11 +233,13 @@
                     <connections>
                         <outlet property="cateCollectionView" destination="m1M-Qw-oTm" id="q8v-g2-daa"/>
                         <outlet property="homeCollectionView" destination="tRI-sK-put" id="bUd-zG-amQ"/>
+                        <outlet property="myLocation" destination="Oe6-WF-tqz" id="mol-sM-dyi"/>
                         <outlet property="myPopUpButton" destination="SCv-gQ-caX" id="1BK-0H-ABI"/>
                         <outlet property="productCollectionView" destination="Qc0-c9-Izt" id="buP-dm-ski"/>
                         <segue destination="JWO-aL-egS" kind="show" identifier="toDetailVC" id="u5a-Ex-aG1"/>
                         <segue destination="FOf-kd-Nvq" kind="show" identifier="toCateVC" id="UxU-R0-ule"/>
                         <segue destination="Tbp-Jy-7YA" kind="show" identifier="toCartVc" id="MU2-Nq-Xxa"/>
+                        <segue destination="fyv-CE-j0F" kind="show" identifier="toFavVC" id="fhL-rt-GEi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoh-1I-DQX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -377,6 +379,7 @@
                         <outlet property="brandLabel" destination="WGc-aB-79N" id="g1e-K8-BI7"/>
                         <outlet property="buyNowButton" destination="fXK-sH-RT1" id="LDH-6S-Y8f"/>
                         <outlet property="descriptionTextView" destination="afj-2l-euU" id="FPE-V6-Zb0"/>
+                        <outlet property="favButton" destination="jGM-sH-Qb8" id="1qF-iz-hA6"/>
                         <outlet property="priceLabel" destination="B5G-Ah-etE" id="Lta-FV-757"/>
                         <outlet property="productNameLabel" destination="q9c-sx-46Z" id="Wii-e4-mRX"/>
                         <outlet property="ratingLabel" destination="U5Y-Ko-5dO" id="hE8-TJ-6Fp"/>
@@ -513,7 +516,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="GMl-d2-ces" kind="relationship" relationship="viewControllers" id="o5e-cP-fKp"/>
-                        <segue destination="fyv-CE-j0F" kind="relationship" relationship="viewControllers" id="fwD-uI-HAj"/>
+                        <segue destination="fyv-CE-j0F" kind="relationship" relationship="viewControllers" id="sgQ-CV-b7r"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ow2-eF-7M8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -523,18 +526,90 @@
         <!--Favories-->
         <scene sceneID="t5p-yn-8RM">
             <objects>
-                <viewController id="fyv-CE-j0F" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="fyv-CE-j0F" customClass="FavViewController" customModule="SalesApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ChX-lb-vYX">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QgD-dv-Q6W">
+                                <rect key="frame" x="162" y="68" width="69" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ySG-8B-2BM">
+                                <rect key="frame" x="349" y="64" width="28" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="buy"/>
+                                <connections>
+                                    <action selector="cartClicked:" destination="fyv-CE-j0F" eventType="touchUpInside" id="Vbi-AZ-Smw"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="cRV-pA-JwV">
+                                <rect key="frame" x="0.0" y="126" width="393" height="643"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="favCell" rowHeight="82" id="pHd-y5-5Q3" customClass="FavTableVCell" customModule="SalesApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="82"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pHd-y5-5Q3" id="MoN-JG-oIN">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="82"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1j-rk-RC9">
+                                                    <rect key="frame" x="32" y="3" width="82" height="76"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Air pods max by Apple" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znQ-WM-kun">
+                                                    <rect key="frame" x="145" y="11" width="171" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$ 1999.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86W-CS-V3F">
+                                                    <rect key="frame" x="145" y="50" width="78" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPk-NY-8Sc">
+                                                    <rect key="frame" x="324" y="24" width="51" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="favClicked:" destination="pHd-y5-5Q3" eventType="touchUpInside" id="zrr-bJ-kxD"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageViews" destination="F1j-rk-RC9" id="9FI-Fp-7yT"/>
+                                            <outlet property="priceLabel" destination="86W-CS-V3F" id="dMi-fE-QAZ"/>
+                                            <outlet property="titleLabel" destination="znQ-WM-kun" id="ADz-76-RVT"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="RRZ-aB-7gw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Favories" image="heart" catalog="system" id="i6P-f3-Vcb"/>
+                    <navigationItem key="navigationItem" id="EWC-7a-8Wt"/>
+                    <connections>
+                        <outlet property="tableView" destination="cRV-pA-JwV" id="mWR-hf-S0a"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Oq-mE-1oF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2456" y="382"/>
+            <point key="canvasLocation" x="2455.7251908396947" y="381.69014084507046"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="zDJ-Qw-xiO">
@@ -639,8 +714,8 @@
                                                         <action selector="increaseClicked:" destination="ioN-Nm-8Mj" eventType="touchUpInside" id="T8J-xl-hf6"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJE-Yv-kmp">
-                                                    <rect key="frame" x="292" y="50" width="7" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJE-Yv-kmp">
+                                                    <rect key="frame" x="292" y="50" width="15" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -713,6 +788,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="MU2-Nq-Xxa"/>
+        <segue reference="sgQ-CV-b7r"/>
         <segue reference="u5a-Ex-aG1"/>
     </inferredMetricsTieBreakers>
     <resources>

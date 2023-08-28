@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A41D278E2A9CAFF200D20EDE /* FavTableVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41D278D2A9CAFF200D20EDE /* FavTableVCell.swift */; };
+		A41D27902A9CB01200D20EDE /* FavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41D278F2A9CB01200D20EDE /* FavViewController.swift */; };
+		A41D27922A9CB0FB00D20EDE /* FavExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41D27912A9CB0FB00D20EDE /* FavExtension.swift */; };
 		A4215F462A9399E700DD655B /* ProductCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4215F452A9399E700DD655B /* ProductCVCell.swift */; };
 		A455413B2A95F34F002928A8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A455413A2A95F34F002928A8 /* DetailViewController.swift */; };
 		A455413D2A96075A002928A8 /* DetailExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A455413C2A96075A002928A8 /* DetailExtension.swift */; };
@@ -32,6 +35,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A41D278D2A9CAFF200D20EDE /* FavTableVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavTableVCell.swift; path = SalesApp/Views/FavTableVCell.swift; sourceTree = SOURCE_ROOT; };
+		A41D278F2A9CB01200D20EDE /* FavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavViewController.swift; sourceTree = "<group>"; };
+		A41D27912A9CB0FB00D20EDE /* FavExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavExtension.swift; sourceTree = "<group>"; };
 		A4215F452A9399E700DD655B /* ProductCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCVCell.swift; sourceTree = "<group>"; };
 		A455413A2A95F34F002928A8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		A455413C2A96075A002928A8 /* DetailExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailExtension.swift; sourceTree = "<group>"; };
@@ -135,6 +141,7 @@
 				A4C180EB2A94E7BF000C6602 /* CategoryCVCell.swift */,
 				A45541422A9630AE002928A8 /* CategoriesCVCell.swift */,
 				A47F15F42A97823200293D33 /* CartTableVCell.swift */,
+				A41D278D2A9CAFF200D20EDE /* FavTableVCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -155,6 +162,7 @@
 				A455413E2A962DF1002928A8 /* CateViewController.swift */,
 				A47F15F02A977A3400293D33 /* SearchViewController.swift */,
 				A47F15F22A977AC000293D33 /* CartViewController.swift */,
+				A41D278F2A9CB01200D20EDE /* FavViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -166,6 +174,7 @@
 				A455413C2A96075A002928A8 /* DetailExtension.swift */,
 				A45541442A9631EA002928A8 /* CateExtension.swift */,
 				A4B9C6F22A98AA85009DA9EE /* CartExtension.swift */,
+				A41D27912A9CB0FB00D20EDE /* FavExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -256,6 +265,7 @@
 				A4215F462A9399E700DD655B /* ProductCVCell.swift in Sources */,
 				A45541432A9630AE002928A8 /* CategoriesCVCell.swift in Sources */,
 				A4C180E72A94B764000C6602 /* SalesModel.swift in Sources */,
+				A41D27922A9CB0FB00D20EDE /* FavExtension.swift in Sources */,
 				A45541452A9631EA002928A8 /* CateExtension.swift in Sources */,
 				A455413F2A962DF1002928A8 /* CateViewController.swift in Sources */,
 				A47522882A93527400396C8B /* AppDelegate.swift in Sources */,
@@ -264,6 +274,8 @@
 				A47F15F52A97823200293D33 /* CartTableVCell.swift in Sources */,
 				A455413B2A95F34F002928A8 /* DetailViewController.swift in Sources */,
 				A475228A2A93527400396C8B /* SceneDelegate.swift in Sources */,
+				A41D278E2A9CAFF200D20EDE /* FavTableVCell.swift in Sources */,
+				A41D27902A9CB01200D20EDE /* FavViewController.swift in Sources */,
 				A47522A22A93600900396C8B /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,6 +426,7 @@
 				DEVELOPMENT_TEAM = NF9R7KNMC7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SalesApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Konum İzni";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -442,6 +455,7 @@
 				DEVELOPMENT_TEAM = NF9R7KNMC7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SalesApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Konum İzni";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

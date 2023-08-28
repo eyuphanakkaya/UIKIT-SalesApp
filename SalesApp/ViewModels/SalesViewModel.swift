@@ -8,16 +8,20 @@
 import Foundation
 import UIKit
 
-protocol ProductProtocol {
-    func add(indexPath: IndexPath)
-}
+//protocol ProductProtocol {
+//    func add(id: Int)
+//}
 class callApi {
     static let api = "https://dummyjson.com/"
 }
 class SalesViewModel {
-    var myProtocol: ProductProtocol?
-    var indexPath: IndexPath?
+  //  var myProtocol: ProductProtocol?
+   // var id: Int?
+    var favList = [MyFav]()
     var cartList = [MyCart]()
+    var totalPrice = 0.0
+    var totalProduct = 1
+    var price = 0.0
     
     func getAllProduct(completion: @escaping([Product])->Void) async throws {
         guard let url = URL(string: "\(callApi.api)products") else {
