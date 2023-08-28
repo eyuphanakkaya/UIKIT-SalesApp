@@ -35,6 +35,9 @@ class DetailViewController: UIViewController {
         buyNowButton.layer.cornerRadius = 10
         addToCartButton.layer.cornerRadius = 10
         
+        
+    
+        
         if let products = product {
             if let price = products.price ,
                let title = products.title ,
@@ -75,11 +78,43 @@ class DetailViewController: UIViewController {
         }
 
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toPayVC" {
+            let toDestionation = segue.destination as! CartViewController
+            toDestionation.viewModel = viewModel
+        }
+    }
+    
+    func addBasket() {
+        if let viewModels = viewModel ,
+           let fetchProduct = product ,
+           let id = fetchProduct.id,
+           let image = fetchProduct.thumbnail,
+           let title = fetchProduct.title ,
+           let price = fetchProduct.price {
+            let cart = MyCart(id: id, image: image, title: title, price: price)
+            if !viewModels.cartList.contains(where: {$0.id == cart.id}) {
+                viewModels.cartList.append(cart)
+        //        viewModels.price = viewModels.price + Double(price)
+                viewModels.totalPrice = viewModels.totalPrice + Double(price)
+            } else {
+                
+                viewModels.totalProduct = viewModels.totalProduct + 1
+        //        viewModels.price = viewModels.price + Double(price)
+                viewModels.totalPrice = viewModels.totalPrice + Double(price)
+
+            }
+            
+        }
+    }
     
     @IBAction func addToCartClicked(_ sender: Any) {
+        addBasket()
     }
     
     @IBAction func buyNowClicked(_ sender: Any) {
+        addBasket()
+        performSegue(withIdentifier: "toPayVC", sender: nil)
     }
     
     @IBAction func favClicked(_ sender: Any) {
@@ -106,6 +141,9 @@ class DetailViewController: UIViewController {
         }
     }
     
+    @IBAction func cartClicked(_ sender: Any) {
+        performSegue(withIdentifier: "toPayVC", sender: nil)
+    }
     @IBAction func backButtonClicked(_ sender: Any) {
         dismiss(animated: true)
     }

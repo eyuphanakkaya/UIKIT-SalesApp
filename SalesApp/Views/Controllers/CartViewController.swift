@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 
 class CartViewController: UIViewController {
-
+    var productList = [Product]()
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -34,6 +34,15 @@ class CartViewController: UIViewController {
         
 
     }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "toDetailVC1" {
+//            let index = sender as? Int
+//            let toDestionation = segue.destination as! DetailViewController
+//            toDestionation.product = productList[index!]
+//            toDestionation.viewModel = viewModel
+//           
+//        }
+//    }
     
     @IBAction func backClicked(_ sender: Any) {
         dismiss(animated: true)

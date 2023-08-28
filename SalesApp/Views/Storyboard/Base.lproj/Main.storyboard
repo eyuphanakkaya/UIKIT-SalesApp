@@ -324,6 +324,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="buy"/>
+                                <connections>
+                                    <action selector="cartClicked:" destination="JWO-aL-egS" eventType="touchUpInside" id="8WK-Us-gIB"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGM-sH-Qb8">
                                 <rect key="frame" x="349" y="386" width="28" height="28"/>
@@ -384,6 +387,7 @@
                         <outlet property="productNameLabel" destination="q9c-sx-46Z" id="Wii-e4-mRX"/>
                         <outlet property="ratingLabel" destination="U5Y-Ko-5dO" id="hE8-TJ-6Fp"/>
                         <outlet property="scrollView" destination="R2D-OW-5Jx" id="VmH-jV-ifk"/>
+                        <segue destination="Tbp-Jy-7YA" kind="show" identifier="toPayVC" id="CUs-yo-U0O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cwY-fy-9fz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -779,6 +783,7 @@
                         <outlet property="locationLabel" destination="HVX-Xr-wqj" id="17A-rZ-DCl"/>
                         <outlet property="tableView" destination="FXV-d6-RnU" id="IgJ-Nq-2bN"/>
                         <outlet property="totalPriceLabel" destination="Zth-2Q-b4a" id="L3N-lb-r8e"/>
+                        <segue destination="JWO-aL-egS" kind="show" identifier="toDetailVC1" id="Upg-bL-Szz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="75S-qn-sYD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -789,7 +794,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="MU2-Nq-Xxa"/>
         <segue reference="sgQ-CV-b7r"/>
-        <segue reference="u5a-Ex-aG1"/>
+        <segue reference="Upg-bL-Szz"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="all" width="41" height="40"/>

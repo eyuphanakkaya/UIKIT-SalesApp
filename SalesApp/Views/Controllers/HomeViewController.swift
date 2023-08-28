@@ -157,7 +157,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func cartClicked(_ sender: Any) {
-        performSegue(withIdentifier: "toFavVC", sender: nil)
+        performSegue(withIdentifier: "toCartVc", sender: nil)
     }
     
     
