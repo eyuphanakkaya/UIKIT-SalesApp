@@ -18,6 +18,7 @@ class SalesViewModel {
   //  var myProtocol: ProductProtocol?
    // var id: Int?
     var favList = [MyFav]()
+    var favLists = [MyFav]()
     var cartList = [MyCart]()
     var totalPrice = 0.0
     var totalProduct = 1

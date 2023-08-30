@@ -214,7 +214,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="all"/>
                                 <connections>
-                                    <action selector="allCateClicked:" destination="GMl-d2-ces" eventType="touchUpInside" id="Goi-3B-oJD"/>
+                                    <action selector="allCateClicked:" destination="GMl-d2-ces" eventType="touchUpInside" id="IQl-Br-Tns"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Delivery adress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KT3-FD-KFF">
@@ -239,7 +239,8 @@
                         <segue destination="JWO-aL-egS" kind="show" identifier="toDetailVC" id="u5a-Ex-aG1"/>
                         <segue destination="FOf-kd-Nvq" kind="show" identifier="toCateVC" id="UxU-R0-ule"/>
                         <segue destination="Tbp-Jy-7YA" kind="show" identifier="toCartVc" id="MU2-Nq-Xxa"/>
-                        <segue destination="fyv-CE-j0F" kind="show" identifier="toFavVC" id="fhL-rt-GEi"/>
+                        <segue destination="fyv-CE-j0F" kind="show" id="XZP-a8-tmi"/>
+                        <segue destination="fgk-nM-8XI" kind="show" identifier="toAllCateVC" id="VOV-VH-Pwm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoh-1I-DQX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -312,7 +313,7 @@
                                     <action selector="buyNowClicked:" destination="JWO-aL-egS" eventType="touchUpInside" id="3nx-qT-Ste"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Detail product" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dba-Dq-urr">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Detail product" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dba-Dq-urr">
                                 <rect key="frame" x="138" y="80" width="117" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -520,7 +521,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="GMl-d2-ces" kind="relationship" relationship="viewControllers" id="o5e-cP-fKp"/>
-                        <segue destination="fyv-CE-j0F" kind="relationship" relationship="viewControllers" id="sgQ-CV-b7r"/>
+                        <segue destination="fyv-CE-j0F" kind="relationship" relationship="viewControllers" id="PIg-7J-t8g"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ow2-eF-7M8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -790,11 +791,82 @@
             </objects>
             <point key="canvasLocation" x="3397.709923664122" y="381.69014084507046"/>
         </scene>
+        <!--All Cate View Controller-->
+        <scene sceneID="Qcf-Vk-1y4">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="fgk-nM-8XI" customClass="AllCateViewController" customModule="SalesApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="L4d-4b-laV">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fip-5q-UwM">
+                                <rect key="frame" x="30" y="58" width="48" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="backIcon"/>
+                                <connections>
+                                    <action selector="backButton:" destination="fgk-nM-8XI" eventType="touchUpInside" id="f83-yx-vrN"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LNC-sF-Fld">
+                                <rect key="frame" x="0.0" y="104" width="393" height="748"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="allcateCell" rowHeight="82" id="oq6-Fa-GNj" customClass="AllCateTableVCell" customModule="SalesApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="82"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oq6-Fa-GNj" id="WQU-yB-9zQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="82"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Shoes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HvK-XW-UKR">
+                                                    <rect key="frame" x="170" y="18" width="203" height="46"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xQd-qG-jYd">
+                                                    <rect key="frame" x="35" y="7" width="82" height="68"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cateNameLabel" destination="HvK-XW-UKR" id="Ot0-AM-Prs"/>
+                                            <outlet property="imageViews" destination="xQd-qG-jYd" id="Lyu-2S-04j"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="All category" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjO-Bf-mud">
+                                <rect key="frame" x="138" y="67" width="117" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ash-xY-Lb5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="RHr-kf-y2b"/>
+                    <connections>
+                        <outlet property="tableView" destination="LNC-sF-Fld" id="n6C-Lb-POT"/>
+                        <segue destination="FOf-kd-Nvq" kind="show" identifier="toProductVC" id="Vym-Jj-Kew"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TWi-zW-dny" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4441.9847328244277" y="450"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="MU2-Nq-Xxa"/>
-        <segue reference="sgQ-CV-b7r"/>
-        <segue reference="Upg-bL-Szz"/>
+        <segue reference="XZP-a8-tmi"/>
+        <segue reference="Vym-Jj-Kew"/>
+        <segue reference="u5a-Ex-aG1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="all" width="41" height="40"/>

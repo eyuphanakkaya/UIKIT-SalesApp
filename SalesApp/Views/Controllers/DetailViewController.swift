@@ -7,9 +7,11 @@
 
 import UIKit
 import Kingfisher
+import Firebase
 
 class DetailViewController: UIViewController {
-    
+    var ref: DatabaseReference?
+    let collectionName = "MyFav"
     var favState = false
     var product: Product?
     var pageControl: UIPageControl!
@@ -27,7 +29,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var productNameLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -35,6 +36,7 @@ class DetailViewController: UIViewController {
         buyNowButton.layer.cornerRadius = 10
         addToCartButton.layer.cornerRadius = 10
         
+        ref = Database.database().reference()
         
     
         
@@ -92,7 +94,7 @@ class DetailViewController: UIViewController {
            let image = fetchProduct.thumbnail,
            let title = fetchProduct.title ,
            let price = fetchProduct.price {
-            let cart = MyCart(id: id, image: image, title: title, price: price)
+            let cart = MyCart(id: id, image: image, title: title, price: price,piece: 1)
             if !viewModels.cartList.contains(where: {$0.id == cart.id}) {
                 viewModels.cartList.append(cart)
         //        viewModels.price = viewModels.price + Double(price)
@@ -119,26 +121,27 @@ class DetailViewController: UIViewController {
     
     @IBAction func favClicked(_ sender: Any) {
         favState.toggle()
-  
         if favState {
-            print("eklendi")
+
             if let id = product?.id ,
                let image = product?.thumbnail ,
                let title = product?.title ,
                let price = product?.price ,
-            let view = viewModel {
+               let view = viewModel {
                 let fav = MyFav(id: id, image: image, title: title, price: price)
-                view.favList.append(fav)
-                print(view.favList)
-         //       favButton.setImage(UIImage(named: "heart.fill"), for: .normal)
                 if !view.favList.contains(where: {$0.id == product?.id }) {
+                    view.favList.append(fav)
+                    let dict: [String:Any] = ["id": fav.id,"image":fav.image,"title":fav.title,"price":fav.price]
+                    let newRef = ref?.child("MyFav").childByAutoId()
+                    newRef?.setValue(dict)
 
+                    print("eklendi")
+                } else {
+                    print("Veri zaten favoride")
                 }
             }
-        } else {
-            print("çıkarıldı")
-            favButton.setImage(UIImage(named: "heart"), for: .normal)
         }
+
     }
     
     @IBAction func cartClicked(_ sender: Any) {

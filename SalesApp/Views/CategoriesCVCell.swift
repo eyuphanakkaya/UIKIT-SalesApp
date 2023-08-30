@@ -21,7 +21,7 @@ class CategoriesCVCell: UICollectionViewCell {
            let image = fetchProduct.thumbnail,
            let title = fetchProduct.title ,
            let price = fetchProduct.price {
-            let cart = MyCart(id: id, image: image, title: title, price: price)
+            let cart = MyCart(id: id, image: image, title: title, price: price, piece: 1)
             if !viewModels.cartList.contains(where: {$0.id == cart.id}) {
                 viewModels.cartList.append(cart)
                 viewModels.totalPrice = viewModels.totalPrice + Double(price)

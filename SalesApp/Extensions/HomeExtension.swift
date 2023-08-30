@@ -13,19 +13,6 @@ import CoreLocation
 extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSource,CLLocationManagerDelegate{
     
     
-    //    func add(indexPath: IndexPath) {
-    //        let indexPath = productList[indexPath.row]
-    //        let index = indexPath as? Int
-    //        if let image = indexPath.thumbnail , let title = indexPath.title , let price = indexPath.price {
-    //            let products = MyCart(image: image, title: title, price: price)
-    //
-    //            viewModel.cartList.append(products)
-    //            print("Sepete Ekle: \(viewModel.cartList)")
-    //        }
-    //    }
-    //
-
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if collectionView == self.homeCollectionView {
             return 2

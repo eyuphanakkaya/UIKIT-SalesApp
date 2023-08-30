@@ -44,7 +44,6 @@ class HomeViewController: UIViewController {
         fetchCate()
         
         
-        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailVC" {
@@ -61,8 +60,11 @@ class HomeViewController: UIViewController {
             let toDestination = segue.destination as! CartViewController
             toDestination.viewModel = viewModel
         } else if segue.identifier == "toFavVC" {
-            let toDestionation = segue.destination as! FavViewController
-            toDestionation.viewModel = viewModel
+            let toDestination = segue.destination as! FavViewController
+            toDestination.viewModel = viewModel
+        } else if segue.identifier == "toAllCateVC" {
+            let toDestination = segue.destination as! AllCateViewController
+            toDestination.viewModel = viewModel
         }
         
         
@@ -156,6 +158,9 @@ class HomeViewController: UIViewController {
         ])
     }
     
+    @IBAction func allCateClicked(_ sender: Any) {
+        performSegue(withIdentifier: "toAllCateVC", sender: nil)
+    }
     @IBAction func cartClicked(_ sender: Any) {
         performSegue(withIdentifier: "toCartVc", sender: nil)
     }

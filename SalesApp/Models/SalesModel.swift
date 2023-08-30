@@ -29,11 +29,13 @@ struct MyCart {
     let image: String?
     let title: String
     let price: Int
+    var piece: Int
 }
 struct MyFav {
     let id: Int?
     let image: String?
     let title: String
     let price: Int
+    
 }
 
