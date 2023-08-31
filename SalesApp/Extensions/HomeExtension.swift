@@ -49,6 +49,7 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
                 cell?.productName.text =  title
                 cell?.productPrice.text = "$\(price)"
                 cell?.product = product
+                cell?.ref = ref
             }
             cell?.viewModel = viewModel
             //            cell?.viewModel?.id = product.id

@@ -32,13 +32,13 @@ class DetailViewController: UIViewController {
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
-
+        
         buyNowButton.layer.cornerRadius = 10
         addToCartButton.layer.cornerRadius = 10
         
         ref = Database.database().reference()
         
-    
+        
         
         if let products = product {
             if let price = products.price ,
@@ -56,9 +56,9 @@ class DetailViewController: UIViewController {
             }
             
         }
-
+        
         if let image = product?.images {
-                   scrollView.contentSize = CGSize(width: CGFloat(image.count) * view.bounds.width, height: 200)
+            scrollView.contentSize = CGSize(width: CGFloat(image.count) * view.bounds.width, height: 200)
             for (index, imageURL) in image.enumerated() {
                 let imageView = UIImageView()
                 imageView.frame = CGRect(x: CGFloat(index) * view.bounds.width, y: 0, width: 390, height: 200)
@@ -78,7 +78,7 @@ class DetailViewController: UIViewController {
             view.addSubview(pageControl)
             view.addSubview(scrollView)
         }
-
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toPayVC" {
@@ -88,26 +88,46 @@ class DetailViewController: UIViewController {
     }
     
     func addBasket() {
-        if let viewModels = viewModel ,
-           let fetchProduct = product ,
-           let id = fetchProduct.id,
-           let image = fetchProduct.thumbnail,
-           let title = fetchProduct.title ,
-           let price = fetchProduct.price {
-            let cart = MyCart(id: id, image: image, title: title, price: price,piece: 1)
-            if !viewModels.cartList.contains(where: {$0.id == cart.id}) {
-                viewModels.cartList.append(cart)
-        //        viewModels.price = viewModels.price + Double(price)
-                viewModels.totalPrice = viewModels.totalPrice + Double(price)
-            } else {
-                
-                viewModels.totalProduct = viewModels.totalProduct + 1
-        //        viewModels.price = viewModels.price + Double(price)
-                viewModels.totalPrice = viewModels.totalPrice + Double(price)
-
-            }
-            
+        guard let id = product?.id ,
+              let image = product?.thumbnail,
+              let price = product?.price,
+              let title = product?.title else{
+            return
         }
+        let cart = MyCart(id: id, image: image, title: title, price: price,piece: 1)
+        
+        ref?.child("MyCart").queryOrdered(byChild: "id").queryEqual(toValue: cart.id).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.exists() {
+                if let cartDict = snapshot.value as? [String: Any],
+                   let cartId = cartDict.keys.first {
+                    var updatedPiece = cart.piece
+                    if let existingPiece = cartDict[cartId] as? [String: Any],
+                       let existingPieceCount = existingPiece["piece"] as? Int {
+                        updatedPiece += existingPieceCount
+                    }
+                    let updateDict: [String: Any] = ["piece": updatedPiece]
+                    self.ref?.child("MyCart").child(cartId).updateChildValues(updateDict) { error, _ in
+                        if let error = error {
+                            print("Güncelleme hatası: \(error.localizedDescription)")
+                        } else {
+                            print("Ürün güncellendi")
+                        }
+                    }
+                }
+                print("ürün zaten var ")
+            } else {
+                let dict: [String:Any] = ["id": id,"image":image,"title":cart.title,"price":cart.price,"piece":cart.piece]
+                let newRef = self.ref?.child("MyCart").childByAutoId()
+                newRef?.setValue(dict)
+                
+                print("eklendi")
+                
+            }
+        })
+        
+    }
+    func checkData(image: String,title: String, price: Int) {
+        
     }
     
     @IBAction func addToCartClicked(_ sender: Any) {
@@ -121,27 +141,35 @@ class DetailViewController: UIViewController {
     
     @IBAction func favClicked(_ sender: Any) {
         favState.toggle()
+        if let id = product?.id ,
+           let image = product?.thumbnail ,
+           let title = product?.title ,
+           let price = product?.price {
+//            ref?.child("MyCart").queryOrdered(byChild: "id").queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
+//                if snapshot.exists() {
+//            })
         if favState {
-
-            if let id = product?.id ,
-               let image = product?.thumbnail ,
-               let title = product?.title ,
-               let price = product?.price ,
-               let view = viewModel {
                 let fav = MyFav(id: id, image: image, title: title, price: price)
-                if !view.favList.contains(where: {$0.id == product?.id }) {
-                    view.favList.append(fav)
-                    let dict: [String:Any] = ["id": fav.id,"image":fav.image,"title":fav.title,"price":fav.price]
-                    let newRef = ref?.child("MyFav").childByAutoId()
-                    newRef?.setValue(dict)
-
-                    print("eklendi")
-                } else {
-                    print("Veri zaten favoride")
-                }
+                    if let id = fav.id ,
+                       let image = fav.image {
+                        let dict: [String:Any] = ["id": id,"image":image,"title":fav.title,"price":fav.price]
+                        let newRef = ref?.child("MyFav").childByAutoId()
+                        newRef?.setValue(dict)
+                        
+                        print("eklendi")
+                    }
+            } else {
+                ref?.child("MyFav").child("\(id)").removeValue(completionBlock: { error , _  in
+                    if let error = error {
+                        print("Veri silinirken hata oluştu: \(error)")
+                    } else {
+                        print("Veri başarıyla silindi.")
+                    }
+                })
+                
             }
         }
-
+        
     }
     
     @IBAction func cartClicked(_ sender: Any) {

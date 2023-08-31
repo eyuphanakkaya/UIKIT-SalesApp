@@ -16,29 +16,25 @@ extension CartViewController: UITableViewDelegate,UITableViewDataSource,CLLocati
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let viewModels = viewModel?.cartList {
-            return  viewModels.count
-        } else {
-            return 1
-        }
+        
+        return myCartList.count
         
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cart =  viewModel?.cartList[indexPath.row]
+        let cart =  myCartList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cartCell", for: indexPath) as! CartTableVCell
-        if let image = cart?.image, let title = cart?.title, let price = cart?.price {
-            cell.imageViews.kf.setImage(with: URL(string: image))
-            cell.productNameLabel.text = title
-            cell.viewModel = viewModel
-            if let total = viewModel?.totalProduct, let price = viewModel?.price  {
-                cell.productPriceLabel.text = "$\(price)"
-                cell.pieceProductLabel.text = "\(total)"
-            }
-          
-            
-            tableView.rowHeight = 82
-        }
-
+        cell.imageViews.kf.setImage(with: URL(string: cart.image ?? ""))
+        cell.productNameLabel.text = cart.title
+        cell.productPriceLabel.text = "$\(cart.price)"
+        cell.pieceProductLabel.text = "\(cart.piece)"
+        cell.viewModel = viewModel
+        cell.product = product
+        cell.ref = ref
+        
+        
+        tableView.rowHeight = 82
+        
+        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -65,7 +61,7 @@ extension CartViewController: UITableViewDelegate,UITableViewDataSource,CLLocati
             }
         }
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Location manager error: \(error.localizedDescription)")
     }

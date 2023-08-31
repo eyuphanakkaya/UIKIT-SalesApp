@@ -6,32 +6,32 @@
 //
 
 import UIKit
+import Firebase
 
 class CategoriesCVCell: UICollectionViewCell {
     var viewModel: SalesViewModel?
     var product: Product?
+    var ref: DatabaseReference?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var productTitleLabel: UILabel!
     
     @IBAction func addCartClicked(_ sender: Any) {
-        if let viewModels = viewModel ,
-           let fetchProduct = product ,
-           let id = fetchProduct.id,
-           let image = fetchProduct.thumbnail,
-           let title = fetchProduct.title ,
-           let price = fetchProduct.price {
-            let cart = MyCart(id: id, image: image, title: title, price: price, piece: 1)
-            if !viewModels.cartList.contains(where: {$0.id == cart.id}) {
-                viewModels.cartList.append(cart)
-                viewModels.totalPrice = viewModels.totalPrice + Double(price)
+        if let id = product?.id ,
+           let image = product?.thumbnail ,
+           let title = product?.title ,
+           let price = product?.price ,
+           let view = viewModel {
+            let cart = MyCart(id: id, image: image, title: title, price: price,piece: 1)
+            if !view.cartList.contains(where: {$0.id == product?.id }) {
+                let dict: [String:Any] = ["id": cart.id,"image":cart.image,"title":cart.title,"price":cart.price,"piece":cart.piece]
+                let newRef = ref?.child("MyCart").childByAutoId()
+                newRef?.setValue(dict)
+                
+                print("eklendi")
             }
-        
         }
-//        if let viewModels = viewModel, let index = viewModel?.id {
-//            viewModels.myProtocol?.add(id: index)
-//            print(index)
-//        }
+
        
     }
     

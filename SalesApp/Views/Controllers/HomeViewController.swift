@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import Firebase
 
 class HomeViewController: UIViewController {
     var productList = [Product]()
@@ -15,7 +16,7 @@ class HomeViewController: UIViewController {
     var viewModel = SalesViewModel()
     var myCartList = [MyCart]()
     let locationManager = CLLocationManager()
-    
+    var ref: DatabaseReference?
     @IBOutlet weak var myLocation: UILabel!
     @IBOutlet weak var myPopUpButton: UIButton!
     @IBOutlet weak var cateCollectionView: UICollectionView!
@@ -29,15 +30,15 @@ class HomeViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         
+        ref = Database.database().reference()
+        
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self
         productCollectionView.dataSource = self
         productCollectionView.delegate = self
         cateCollectionView.delegate = self
         cateCollectionView.dataSource = self
-        
-       
-        
+                
         productDesign()
         cateDesign()
         
@@ -112,6 +113,7 @@ class HomeViewController: UIViewController {
         
         cateCollectionView.collectionViewLayout = design
     }
+
     func setPopUpButton() {
         
         myPopUpButton.menu = UIMenu(children: [

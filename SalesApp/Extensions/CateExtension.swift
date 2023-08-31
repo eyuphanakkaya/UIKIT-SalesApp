@@ -40,6 +40,7 @@ extension CateViewController: UICollectionViewDataSource,UICollectionViewDelegat
         cell.priceLabel.text = "$\(cate.price ?? 0)"
         cell.product = cate
         cell.viewModel = viewModel
+        cell.ref = ref
 //        cell.viewModel?.id = cate.id
 //        cell.viewModel?.myProtocol = self
         return cell
