@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i90-pa-7al">
-                                <rect key="frame" x="-3" y="106" width="390" height="44"/>
+                                <rect key="frame" x="-4" y="106" width="391" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -227,13 +227,12 @@
                         <outlet property="productCollectionView" destination="Qc0-c9-Izt" id="buP-dm-ski"/>
                         <segue destination="JWO-aL-egS" kind="show" identifier="toDetailVC" id="u5a-Ex-aG1"/>
                         <segue destination="FOf-kd-Nvq" kind="show" identifier="toCateVC" id="UxU-R0-ule"/>
-                        <segue destination="fyv-CE-j0F" kind="show" id="XZP-a8-tmi"/>
                         <segue destination="fgk-nM-8XI" kind="show" identifier="toAllCateVC" id="VOV-VH-Pwm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoh-1I-DQX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2455.7251908396947" y="-346.47887323943661"/>
+            <point key="canvasLocation" x="1482" y="-386"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="12V-6v-VBF">
@@ -313,7 +312,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
+                                <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system">
+                                    <color key="baseForegroundColor" red="1" green="0.074743433489999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="favClicked:" destination="JWO-aL-egS" eventType="touchUpInside" id="E0u-iD-HH2"/>
                                 </connections>
@@ -495,7 +496,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ow2-eF-7M8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1549" y="35"/>
+            <point key="canvasLocation" x="291" y="5"/>
         </scene>
         <!--Favories-->
         <scene sceneID="t5p-yn-8RM">
@@ -542,16 +543,6 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPk-NY-8Sc">
-                                                    <rect key="frame" x="324" y="24" width="51" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
-                                                    <connections>
-                                                        <action selector="favClicked:" destination="pHd-y5-5Q3" eventType="touchUpInside" id="zrr-bJ-kxD"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -570,11 +561,12 @@
                     <navigationItem key="navigationItem" id="EWC-7a-8Wt"/>
                     <connections>
                         <outlet property="tableView" destination="cRV-pA-JwV" id="mWR-hf-S0a"/>
+                        <segue destination="JWO-aL-egS" kind="show" identifier="toDetailFav" id="dmv-QZ-IGb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Oq-mE-1oF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2455.7251908396947" y="381.69014084507046"/>
+            <point key="canvasLocation" x="291" y="818"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="zDJ-Qw-xiO">
@@ -741,7 +733,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="75S-qn-sYD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3397.709923664122" y="381.69014084507046"/>
+            <point key="canvasLocation" x="1482" y="380"/>
         </scene>
         <!--All Cate View Controller-->
         <scene sceneID="Qcf-Vk-1y4">
@@ -815,9 +807,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="XZP-a8-tmi"/>
         <segue reference="UxU-R0-ule"/>
-        <segue reference="u5a-Ex-aG1"/>
+        <segue reference="Upg-bL-Szz"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="all" width="41" height="40"/>

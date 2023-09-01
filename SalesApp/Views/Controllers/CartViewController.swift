@@ -11,14 +11,14 @@ import Firebase
 
 
 class CartViewController: UIViewController {
+    var viewModel = SalesViewModel()
     var productList = [Product]()
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     var toplam = 0
+    var deneme = 0
     var ref: DatabaseReference?
-    var viewModel: SalesViewModel?
-    var product: Product?
     var myCartList = [MyCart]()
     let locationManager = CLLocationManager()
     
@@ -33,17 +33,33 @@ class CartViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
-        
-        for x in self.myCartList {
-            self.toplam = self.toplam + x.price
-        }
-       
+        viewModel.fetchProduct()
       
         DispatchQueue.main.async {
             self.allCart()
-
         }
        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        updateTotalPrice()
+        totalPriceLabel.text = "$\(toplam).00"
+
+    }
+    func updateTotalPrice() {
+        var newTotal = 0
+        for x in myCartList {
+            newTotal += (x.price * x.piece)
+        }
+        toplam = newTotal
+       
+
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailVC1" {
+            let index = sender as! Int
+            let toDestionation = segue.destination as! DetailViewController
+            toDestionation.product = viewModel.productList[index]
+        }
     }
     func allCart() {
         ref?.child("MyCart").observe(.value, with: { snapshot in
@@ -71,14 +87,9 @@ class CartViewController: UIViewController {
 
                 }
             }
-            
         })
     }
     
-    @IBAction func backClicked(_ sender: Any) {
-        dismiss(animated: true)
-        
-    }
     @IBAction func paymentsClicked(_ sender: Any) {
         print("Ödeme yapıldı.")
     }

@@ -60,9 +60,6 @@ class HomeViewController: UIViewController {
         } else if segue.identifier == "toCartVc" {
             let toDestination = segue.destination as! CartViewController
             toDestination.viewModel = viewModel
-        } else if segue.identifier == "toFavVC" {
-            let toDestination = segue.destination as! FavViewController
-            toDestination.viewModel = viewModel
         } else if segue.identifier == "toAllCateVC" {
             let toDestination = segue.destination as! AllCateViewController
             toDestination.viewModel = viewModel

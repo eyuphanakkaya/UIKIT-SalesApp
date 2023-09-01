@@ -34,9 +34,6 @@ class CateViewController: UIViewController {
             let index = sender as? Int
             let toDestionation = segue.destination as! DetailViewController
             toDestionation.product = productsList[index!]
-        } else if segue.identifier == "toCart" {
-            let toDestionation = segue.destination as! CartViewController
-            toDestionation.viewModel = viewModel
         }
         
     }
@@ -68,7 +65,5 @@ class CateViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @IBAction func cartClicked(_ sender: Any) {
-        performSegue(withIdentifier: "toCart", sender: nil)
-    }
+
 }

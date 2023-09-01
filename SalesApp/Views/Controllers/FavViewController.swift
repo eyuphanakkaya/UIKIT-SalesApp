@@ -9,17 +9,26 @@ import UIKit
 import Firebase
 
 class FavViewController: UIViewController {
-    var viewModel: SalesViewModel?
+    var viewModel = SalesViewModel()
     var myList = [MyFav]()
     var ref: DatabaseReference?
-    var querySnapshot: QuerySnapshot?
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
         allFav()
+        print(viewModel.productList)
         tableView.delegate = self
         tableView.dataSource = self
+        viewModel.fetchProduct()
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailFav" {
+            let index = sender as? Int
+            let toDestination = segue.destination as! DetailViewController
+            toDestination.product = viewModel.productList[index!]
+            
+        }
     }
     func allFav() {
         ref?.child("MyFav").observe(.value, with: { snapshot in
@@ -35,8 +44,6 @@ class FavViewController: UIViewController {
                                               title: title,
                                               price: price)
                         self.myList.append(myFavItem)
-
-                        
                     }
                 }
                 self.tableView.reloadData()
@@ -45,8 +52,6 @@ class FavViewController: UIViewController {
         })
     }
 
-    @IBAction func cartClicked(_ sender: Any) {
-        
-    }
+
     
 }

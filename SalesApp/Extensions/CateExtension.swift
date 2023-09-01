@@ -10,18 +10,6 @@ import UIKit
 import Kingfisher
 
 extension CateViewController: UICollectionViewDataSource,UICollectionViewDelegate {
-
-    
-//    func add(indexPath: IndexPath) {
-//        let  deneme = viewModel?.indexPath
-//        print(deneme)
-//        if let viewModels = viewModel, let image = indexPath.thumbnail, let title = indexPath.title, let price = indexPath?.price {
-//            let products = MyCart(image: image, title: title, price: price)
-//            viewModels.cartList.append(products)
-//            print("Sepete Ekle: \(indexPath)")
-//        }
-//
-//    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -41,8 +29,6 @@ extension CateViewController: UICollectionViewDataSource,UICollectionViewDelegat
         cell.product = cate
         cell.viewModel = viewModel
         cell.ref = ref
-//        cell.viewModel?.id = cate.id
-//        cell.viewModel?.myProtocol = self
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

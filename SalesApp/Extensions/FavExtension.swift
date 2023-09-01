@@ -34,5 +34,8 @@ extension FavViewController: UITableViewDelegate,UITableViewDataSource {
         tableView.rowHeight = 82
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "toDetailFav", sender: indexPath.row)
+    }
     
 }

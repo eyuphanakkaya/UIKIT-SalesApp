@@ -9,8 +9,7 @@ import UIKit
 import Firebase
 
 class CartTableVCell: UITableViewCell {
-    var viewModel: SalesViewModel?
-    var product: Product?
+    var product: MyCart?
     var ref: DatabaseReference?
     @IBOutlet weak var imageViews: UIImageView!
     @IBOutlet weak var pieceProductLabel: UILabel!
@@ -19,9 +18,7 @@ class CartTableVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
  
-        if let total = viewModel?.totalProduct {
-            pieceProductLabel.text = "\(total)"
-        }
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,16 +32,16 @@ class CartTableVCell: UITableViewCell {
     }
     
     @IBAction func increaseClicked(_ sender: Any) {
-        artı()
+        increase()
         print("artı")
     }
     @IBAction func reduceClicked(_ sender: Any) {
-        eksilt()
+        decrease()
         print("eksi")
     }
-    func eksilt() {
+    func decrease() {
         guard let id = product?.id ,
-              let image = product?.thumbnail,
+              let image = product?.image,
               let price = product?.price,
               let title = product?.title else{
             return
@@ -58,7 +55,12 @@ class CartTableVCell: UITableViewCell {
                     var updatedPiece = cart.piece
                     if let existingPiece = cartDict[cartId] as? [String: Any],
                        let existingPieceCount = existingPiece["piece"] as? Int {
-                        updatedPiece -= existingPieceCount
+                        if updatedPiece > 0 {
+                            updatedPiece = existingPieceCount - 1
+                        } else {
+                           print("azalmadı")
+                        }
+                       
                     }
                     let updateDict: [String: Any] = ["piece": updatedPiece]
                     self.ref?.child("MyCart").child(cartId).updateChildValues(updateDict) { error, _ in
@@ -68,6 +70,7 @@ class CartTableVCell: UITableViewCell {
                             print("Ürün güncellendi")
                         }
                     }
+
                 }
                 print("ürün zaten var ")
             } else {
@@ -77,16 +80,16 @@ class CartTableVCell: UITableViewCell {
         })
         
     }
-    func artı() {
+    func increase() {
         guard let id = product?.id ,
-              let image = product?.thumbnail,
+              let image = product?.image,
               let price = product?.price,
               let title = product?.title else{
             return
         }
         let cart = MyCart(id: id, image: image, title: title, price: price,piece: 1)
         
-        ref?.child("MyCart").queryOrdered(byChild: "id").queryEqual(toValue: cart.id).observeSingleEvent(of: .value, with: { snapshot in
+        ref?.child("MyCart").queryOrdered(byChild: "id").queryEqual(toValue: product?.id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 if let cartDict = snapshot.value as? [String: Any],
                    let cartId = cartDict.keys.first {

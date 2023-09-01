@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 //protocol ProductProtocol {
 //    func add(id: Int)
@@ -15,14 +16,21 @@ class callApi {
     static let api = "https://dummyjson.com/"
 }
 class SalesViewModel {
-  //  var myProtocol: ProductProtocol?
-   // var id: Int?
+
+    var productList = [Product]()
     var favList = [MyFav]()
     var favLists = [MyFav]()
     var cartList = [MyCart]()
-    var totalPrice = 0.0
-    var totalProduct = 1
-    var price = 0.0
+    
+    func fetchProduct() {
+        Task {
+            try await  getAllProduct { product in
+                    self.productList.append(contentsOf: product)
+            }
+        }
+        
+    }
+    
     
     func getAllProduct(completion: @escaping([Product])->Void) async throws {
         guard let url = URL(string: "\(callApi.api)products") else {
@@ -56,6 +64,45 @@ class SalesViewModel {
         if let results = result.products {
             completion(results)
         }
+    }
+    func addBasket(product: Product,ref: DatabaseReference) {
+        guard let id = product.id ,
+              let image = product.thumbnail,
+              let price = product.price,
+              let title = product.title else{
+            return
+        }
+        let cart = MyCart(id: id, image: image, title: title, price: price,piece: 1)
+        
+        ref.child("MyCart").queryOrdered(byChild: "id").queryEqual(toValue: cart.id).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.exists() {
+                if let cartDict = snapshot.value as? [String: Any],
+                   let cartId = cartDict.keys.first {
+                    var updatedPiece = cart.piece
+                    if let existingPiece = cartDict[cartId] as? [String: Any],
+                       let existingPieceCount = existingPiece["piece"] as? Int {
+                        updatedPiece += existingPieceCount
+                    }
+                    let updateDict: [String: Any] = ["piece": updatedPiece]
+                    ref.child("MyCart").child(cartId).updateChildValues(updateDict) { error, _ in
+                        if let error = error {
+                            print("Güncelleme hatası: \(error.localizedDescription)")
+                        } else {
+                            print("Ürün güncellendi")
+                        }
+                    }
+                }
+                print("ürün zaten var ")
+            } else {
+                let dict: [String:Any] = ["id": id,"image":image,"title":cart.title,"price":cart.price,"piece":cart.piece]
+                let newRef = ref.child("MyCart").childByAutoId()
+                newRef.setValue(dict)
+                
+                print("eklendi")
+                
+            }
+        })
+        
     }
 
 

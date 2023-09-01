@@ -16,7 +16,6 @@ extension CartViewController: UITableViewDelegate,UITableViewDataSource,CLLocati
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return myCartList.count
         
     }
@@ -27,10 +26,8 @@ extension CartViewController: UITableViewDelegate,UITableViewDataSource,CLLocati
         cell.productNameLabel.text = cart.title
         cell.productPriceLabel.text = "$\(cart.price)"
         cell.pieceProductLabel.text = "\(cart.piece)"
-        cell.viewModel = viewModel
-        cell.product = product
+        cell.product = cart
         cell.ref = ref
-        
         
         tableView.rowHeight = 82
         
