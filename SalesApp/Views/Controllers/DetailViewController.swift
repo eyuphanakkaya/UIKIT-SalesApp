@@ -123,6 +123,17 @@ class DetailViewController: UIViewController {
                         if let error = error {
                             print("Veri silinirken hata oluştu: \(error)")
                         } else {
+                            if let favDict = snapshot.value as? [String: Any],
+                               let favId = favDict.keys.first {
+                                self.ref?.child("MyFav").child(favId).removeValue() { error, _ in
+                                    if let error = error {
+                                        print("Güncelleme hatası: \(error.localizedDescription)")
+                                        
+                                    } else {
+                                        print("Ürün silindi")
+                                    }
+                                }
+                            }
                             print("Veri başarıyla silindi.")
                         }
                     })

@@ -23,7 +23,6 @@ class FavTableVCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    @IBAction func favClicked(_ sender: Any) {
-    }
+
     
 }

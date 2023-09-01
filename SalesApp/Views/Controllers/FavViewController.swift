@@ -26,7 +26,7 @@ class FavViewController: UIViewController {
         if segue.identifier == "toDetailFav" {
             let index = sender as? Int
             let toDestination = segue.destination as! DetailViewController
-            toDestination.product = viewModel.productList[index!]
+            toDestination.product = viewModel.productList[index! + 1 ]
             
         }
     }
