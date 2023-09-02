@@ -35,7 +35,9 @@ extension CartViewController: UITableViewDelegate,UITableViewDataSource,CLLocati
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "toDetailVC1", sender: indexPath.row)
+        let cart = myCartList[indexPath.row]
+        
+        performSegue(withIdentifier: "toDetailVC1", sender: cart.id)
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }

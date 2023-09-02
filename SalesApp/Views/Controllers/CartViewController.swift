@@ -58,7 +58,7 @@ class CartViewController: UIViewController {
         if segue.identifier == "toDetailVC1" {
             let index = sender as! Int
             let toDestionation = segue.destination as! DetailViewController
-            toDestionation.product = viewModel.productList[index]
+            toDestionation.product = viewModel.productList[index - 1]
         }
     }
     func allCart() {

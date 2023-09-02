@@ -35,7 +35,8 @@ extension FavViewController: UITableViewDelegate,UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "toDetailFav", sender: indexPath.row)
+        let fav = myList[indexPath.row]
+        performSegue(withIdentifier: "toDetailFav", sender: fav.id)
     }
     
 }

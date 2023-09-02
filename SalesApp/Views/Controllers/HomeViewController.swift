@@ -9,7 +9,10 @@ import UIKit
 import CoreLocation
 import Firebase
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController,UISearchBarDelegate {
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    var searchList = [Product]()
     var productList = [Product]()
     var cateList = [String]()
     var cateViewController = CateViewController()
@@ -24,6 +27,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var productCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchBar.delegate = self
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -57,13 +62,15 @@ class HomeViewController: UIViewController {
             let toDestination = segue.destination as! CateViewController
             toDestination.cateFind = cateList[index!]
             toDestination.viewModel = viewModel
-        } else if segue.identifier == "toCartVc" {
-            let toDestination = segue.destination as! CartViewController
-            toDestination.viewModel = viewModel
         } else if segue.identifier == "toAllCateVC" {
             let toDestination = segue.destination as! AllCateViewController
             toDestination.viewModel = viewModel
         }
+//        } else if segue.identifier == "" {
+//            let index = sender as? Product
+//            let toDestination = segue.destination as! SearchViewController
+//            toDestination.product = index
+//        }
         
         
     }
@@ -110,7 +117,27 @@ class HomeViewController: UIViewController {
         
         cateCollectionView.collectionViewLayout = design
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchQuery = searchBar.text {
+            Task {
+                try await viewModel.searchProduct(search: searchQuery) { result in
+                    DispatchQueue.main.async {
+                        let searchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+                        searchVC.productList = result // searchResults, SearchViewController içinde tanımlanmış bir değişken olmalıdır.
+                        self.present(searchVC, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+    }
 
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // Arama çubuğunu gizlemek için aşağıdaki satırı kullanabilirsiniz
+      dismiss(animated: true)
+    }
+
+    
     func setPopUpButton() {
         
         myPopUpButton.menu = UIMenu(children: [

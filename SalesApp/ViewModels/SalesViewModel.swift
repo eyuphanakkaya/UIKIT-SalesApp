@@ -22,6 +22,12 @@ class SalesViewModel {
     var favLists = [MyFav]()
     var cartList = [MyCart]()
     
+//    func fetchSearchProduct(search: String) {
+//        searchProduct(search: search) { result in
+//            <#code#>
+//        }
+//    }
+    
     func fetchProduct() {
         Task {
             try await  getAllProduct { product in
@@ -30,8 +36,6 @@ class SalesViewModel {
         }
         
     }
-    
-    
     func getAllProduct(completion: @escaping([Product])->Void) async throws {
         guard let url = URL(string: "\(callApi.api)products") else {
             print("HATAAA!!!")
@@ -64,6 +68,18 @@ class SalesViewModel {
         if let results = result.products {
             completion(results)
         }
+    }
+    func searchProduct(search: String,completion: @escaping([Product])->Void) async throws {
+        guard let url = URL(string: "https://dummyjson.com/products/search?q=\(search)") else {
+            print("Hata")
+            return
+        }
+        let data = try await URLSession.shared.data(from: url)
+        let result = try JSONDecoder().decode(ProductResult.self, from: data.0)
+        if let results = result.products {
+            completion(results)
+        }
+        
     }
     func addBasket(product: Product,ref: DatabaseReference) {
         guard let id = product.id ,
