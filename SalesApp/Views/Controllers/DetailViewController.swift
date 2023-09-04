@@ -23,7 +23,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var brandLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var addToCartButton: UIButton!
-    @IBOutlet weak var buyNowButton: UIButton!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var productNameLabel: UILabel!
@@ -33,7 +32,6 @@ class DetailViewController: UIViewController {
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         
-        buyNowButton.layer.cornerRadius = 10
         addToCartButton.layer.cornerRadius = 10
         
         ref = Database.database().reference()
@@ -99,15 +97,6 @@ class DetailViewController: UIViewController {
             viewModel?.addBasket(product: products, ref: referance)
             
         }
-    }
-    
-    @IBAction func buyNowClicked(_ sender: Any) {
-        if let products = product,
-           let referance = ref {
-            viewModel?.addBasket(product: products, ref: referance)
-            
-        }
-        performSegue(withIdentifier: "toPayVC", sender: nil)
     }
     
     @IBAction func favClicked(_ sender: Any) {

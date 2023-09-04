@@ -15,7 +15,7 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if collectionView == self.homeCollectionView {
-            return 2
+            return 1
         } else if collectionView == self.productCollectionView {
             return 1
         } else {

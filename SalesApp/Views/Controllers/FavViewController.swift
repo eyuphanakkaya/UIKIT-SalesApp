@@ -17,7 +17,6 @@ class FavViewController: UIViewController {
         super.viewDidLoad()
         ref = Database.database().reference()
         allFav()
-        print(viewModel.productList)
         tableView.delegate = self
         tableView.dataSource = self
         viewModel.fetchProduct()

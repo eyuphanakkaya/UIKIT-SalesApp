@@ -13,7 +13,9 @@ import Firebase
 class CartViewController: UIViewController {
     var viewModel = SalesViewModel()
     var productList = [Product]()
+    var alert = MyAlerts()
     @IBOutlet weak var totalPriceLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     var toplam = 0
@@ -24,7 +26,8 @@ class CartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        backButton.isHidden = true
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -34,16 +37,16 @@ class CartViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         viewModel.fetchProduct()
-      
+        
         DispatchQueue.main.async {
             self.allCart()
         }
-       
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         updateTotalPrice()
         totalPriceLabel.text = "$\(toplam).00"
-
+        
     }
     func updateTotalPrice() {
         var newTotal = 0
@@ -51,8 +54,8 @@ class CartViewController: UIViewController {
             newTotal += (x.price * x.piece)
         }
         toplam = newTotal
-       
-
+        
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailVC1" {
@@ -78,19 +81,34 @@ class CartViewController: UIViewController {
                                                 piece: piece )
                         
                         self.myCartList.append(myCartItem)
-
-                       
+                        
+                        
                     }
                 }
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
-
+                    
                 }
             }
         })
     }
     
     @IBAction func paymentsClicked(_ sender: Any) {
-        print("Ödeme yapıldı.")
+        alert.loginError(title: "Başarılı", message: "Tebrikler siparişiniz verildi. Bizi tercih ettiğiniz için teşekkürler..", viewControllers: self)
+        ref?.child("MyCart").removeValue { (error, _) in
+            if let error = error {
+                print("Veri silme hatası: \(error.localizedDescription)")
+            } else {
+                print("Başarılı bir şekilde veri silindi.")
+                self.myCartList.removeAll()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    @IBAction func backClicked(_ sender: Any) {
+        dismiss(animated: true)
     }
 }

@@ -49,8 +49,8 @@ class HomeViewController: UIViewController,UISearchBarDelegate {
         
         fetchCate()
         
-        
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailVC" {
             let index = sender as? Int
@@ -66,13 +66,7 @@ class HomeViewController: UIViewController,UISearchBarDelegate {
             let toDestination = segue.destination as! AllCateViewController
             toDestination.viewModel = viewModel
         }
-//        } else if segue.identifier == "" {
-//            let index = sender as? Product
-//            let toDestination = segue.destination as! SearchViewController
-//            toDestination.product = index
-//        }
-        
-        
+                
     }
     override func viewWillAppear(_ animated: Bool)  {
         Task {
@@ -187,10 +181,18 @@ class HomeViewController: UIViewController,UISearchBarDelegate {
     @IBAction func allCateClicked(_ sender: Any) {
         performSegue(withIdentifier: "toAllCateVC", sender: nil)
     }
-    @IBAction func cartClicked(_ sender: Any) {
-        performSegue(withIdentifier: "toCartVc", sender: nil)
-    }
+
     
+    @IBAction func signOutClicked(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as! LoginViewController
+                       UIApplication.shared.windows.first?.rootViewController = loginViewController
+            UserDefaults.standard.set(false, forKey: "isLogin")
+        } catch {
+            print("Çıkış yapılamadı..")
+        }
+    }
     
 }
 

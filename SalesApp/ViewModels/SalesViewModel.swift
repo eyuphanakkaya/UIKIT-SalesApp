@@ -8,10 +8,9 @@
 import Foundation
 import UIKit
 import Firebase
+import GoogleSignIn
 
-//protocol ProductProtocol {
-//    func add(id: Int)
-//}
+
 class callApi {
     static let api = "https://dummyjson.com/"
 }
@@ -22,11 +21,7 @@ class SalesViewModel {
     var favLists = [MyFav]()
     var cartList = [MyCart]()
     
-//    func fetchSearchProduct(search: String) {
-//        searchProduct(search: search) { result in
-//            <#code#>
-//        }
-//    }
+
     
     func fetchProduct() {
         Task {
@@ -120,6 +115,8 @@ class SalesViewModel {
         })
         
     }
+    
+
 
 
 }

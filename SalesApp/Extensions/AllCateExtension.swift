@@ -19,7 +19,6 @@ extension AllCateViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cate = cateList[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "allcateCell", for: indexPath) as! AllCateTableVCell
-        print(cate)
         cell.cateNameLabel.text = cate.uppercased()
         switch cate {
         case "smartphones":
