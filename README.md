@@ -1,6 +1,6 @@
 # UIKIT-SalesApp
 
-Swift ve UIKit kullanarak oluşturduğunuz uygulamanızın temel özellikleri arasında Firebase kullanarak giriş yapma, kaydolma ve çıkış yapma işlemleri bulunmaktadır. Ayrıca şifresini unutan kullanıcılar için Firebase üzerinden doğrulama ile şifre sıfırlama seçeneği sunuyorve Google ile giriş yapmak isteyen kullanıcılar da uygulamanıza kolayca erişebiliyorlar. Uygulama yapısında MVVM (Model-View-ViewModel) desenini tercih ettiğim.
+Swift ve UIKit kullanarak oluşturduğunuz uygulamanızın temel özellikleri arasında Firebase kullanarak giriş yapma, kaydolma ve çıkış yapma işlemleri bulunmaktadır. Ayrıca şifresini unutan kullanıcılar için Firebase üzerinden doğrulama ile şifre sıfırlama seçeneği sunuyorve Google ile giriş yapmak isteyen kullanıcılar da uygulamanıza kolayca erişebiliyorlar. Uygulama yapısında MVVM (Model-View-ViewModel) desenini tercih ettiğim.Ayrıca giriş yapan kullanıcının anlık konumunu alıyor ve böylece sipariş esnasında sıkıntı yaşanmıyor.
 
 Giriş yapan kullanıcılar ayrıca Web API kullanarak ürünleri arama, sepete ekleme ve favorilere ekleme gibi işlemler gerçekleştirebiliyorlar.
 
